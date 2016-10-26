@@ -51,10 +51,10 @@ Find more information [here](https://docs.sentry.io/api/releases/post-release-fi
 
 ### Parameters
 
-organisation [String] – Sentry Organisation Slug.
-authorisationToken [String] - Sentry Organisation Authorisation Token. (Go to https://sentry.io/api/ to create)
-project [String] – Sentry Project Slug.
-releaseId (string) – Release Identifier/Version.
+**organisation** _[String]_ - Sentry Organisation Slug.  
+**authorisationToken** _[String]_ - Sentry Organisation Authorisation Token. (Go to https://sentry.io/api/ to create)  
+**project** _[String]_ – Sentry Project Slug.  
+**releaseId** _[String]_ – Release Identifier/Version.
 
 ### Contributors
 [Sundarasan Natarajan](https://www.facebook.com/s.n.sundarasan)
