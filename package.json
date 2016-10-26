@@ -1,0 +1,44 @@
+{
+  "name": "grunt-sentry-release",
+  "description": "Creates release and uploads artifacts to Sentry",
+  "version": "0.1.0",
+  "homepage": "https://github.com/sundarasan/grunt-sentry-release",
+  "author": {
+    "name": "Sundarasan",
+    "email": "s.n.sundarasan@gmail.com",
+    "url": "https://www.facebook.com/s.n.sundarasan"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sundarasan/grunt-sentry-release.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sundarasan/grunt-sentry-release/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/sundarasan/grunt-sentry-release/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "^0.9.2",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-nodeunit": "^0.3.3",
+    "grunt": "~0.4.5"
+  },
+  "keywords": [
+    "gruntplugin"
+  ],
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "request": "^2.76.0",
+    "request-promise": "^4.1.1"
+  }
+}
