@@ -1,5 +1,5 @@
 /*
- * grunt-sentry-release-files
+ * grunt-sentry-files
  * https://github.com/sundarasan/grunt-sentry-release
  *
  * Copyright (c) 2016 Sundarasan
