@@ -1,7 +1,7 @@
 {
   "name": "grunt-sentry-files",
   "description": "Creates release and uploads artifacts to Sentry",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/sundarasan/grunt-sentry-release",
   "author": {
     "name": "Sundarasan",
