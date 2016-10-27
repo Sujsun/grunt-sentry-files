@@ -1,4 +1,4 @@
-# grunt-sentry-files
+# grunt-sentry-files [![Build Status](https://travis-ci.org/Sujsun/grunt-sentry-files.svg?branch=master)](https://travis-ci.org/Sujsun/grunt-sentry-files)
 
 > Creates release and uploads artifacts to Sentry
 
