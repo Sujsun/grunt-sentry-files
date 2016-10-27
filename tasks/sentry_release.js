@@ -177,10 +177,10 @@ var Helpers = {
 
 module.exports = function(gruntArg) {
 
-  grunt = gruntArg;
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
-
+  grunt = gruntArg;
+  
   grunt.registerMultiTask('sentry_files', 'Creates release and uploads artifacts to Sentry', function() {
     var done = this.async(),
       sentryUploader;
