@@ -86,21 +86,21 @@ SentryUrl.prototype = {
  */
 function SentryUploader (params) {
   params || (params = {});
-  Helpers.bindAll(this, 'uploadArtifact');
-  this.artifacts = params.artifacts || [];
+  Helpers.bindAll(this, 'uploadFile');
   this.releaseId = params.releaseId;
+  this.files = params.files || [];
   this.sentryUrl = new SentryUrl(params);
   return this;
 };
 
 SentryUploader.prototype = {
 
-  createReleaseAndUploadArtifacts: function () {
+  createReleaseAndUploadFiles: function () {
     var self = this;
     return this.createRelease(this.releaseId).then(function (releaseResponse) {
       self.releaseId = releaseResponse.version;
       grunt.log.writeln('ReleaseID: '.bold + '"' + self.releaseId + '"');
-      return self.uploadArtifacts();
+      return self.uploadFiles();
     });
   },
 
@@ -117,11 +117,11 @@ SentryUploader.prototype = {
     });
   },
 
-  uploadArtifacts: function () {
-    return Promise.each(this.artifacts, this.uploadArtifact);
+  uploadFiles: function () {
+    return Promise.each(this.files, this.uploadFile);
   },
 
-  uploadArtifact: function (artifactObject) {
+  uploadFile: function (artifactObject) {
     var self = this;
     grunt.log.writeln('UPLOADING: File: '.bold + '"' + artifactObject.file + '"');
     return request.post({
@@ -181,13 +181,7 @@ module.exports = function(gruntArg) {
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
 
-  grunt.registerMultiTask('sentry_release', 'Creates release and uploads artifacts to Sentry', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
-    });
-
+  grunt.registerMultiTask('sentry_files', 'Creates release and uploads artifacts to Sentry', function() {
     var done = this.async(),
       sentryUploader;
 
@@ -196,15 +190,15 @@ module.exports = function(gruntArg) {
       authorisationToken: this.data.authorisationToken,
       project: this.data.project,
       releaseId: this.data.releaseId,
-      artifacts: this.data.artifacts,
+      files: this.data.files,
     };
 
     sentryUploader = new SentryUploader(params);
 
-    return sentryUploader.createReleaseAndUploadArtifacts().then(function () {
+    return sentryUploader.createReleaseAndUploadFiles().then(function () {
       done();
     }).catch(function (err) {
-      done(err || new Error('Error while trying to create release and upload source maps.'));
+      done(err || new Error('Error while trying to create release and upload files.'));
     });
 
   });

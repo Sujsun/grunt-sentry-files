@@ -17,21 +17,21 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-sentry-files');
 ```
 
-## The "sentry_release" task
+## The "sentry_files" task
 
 ### Overview
-In your project's Gruntfile, add a section named `sentry_release` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `sentry_files` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
 
-  sentry_release: {
+  sentry_files: {
     dist: {
       organisation: '<Organisation Name>',
       authorisationToken: '<AuthorisationToken>',
       project: '<Project Name>',
       releaseId: '<Release ID/Version>',
-      artifacts: [
+      files: [
         {
           file: '<File Path>',
           name: '<File Mapping Path>',
@@ -57,4 +57,4 @@ Find more information [here](https://docs.sentry.io/api/releases/post-release-fi
 **releaseId** _[String]_ – Release Identifier/Version.
 
 ### Contributors
-[Sundarasan Natarajan](https://www.facebook.com/s.n.sundarasan)
+[Sundarasan Natarajan](https://github.com/sundarasan)

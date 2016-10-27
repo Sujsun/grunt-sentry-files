@@ -18,14 +18,14 @@ module.exports = function(grunt) {
     buildId: buildId,
 
     // Configuration to be run (and then tested).
-    sentry_release: {
+    sentry_files: {
 
       one: {
         organisation: 'sundarasan',
         authorisationToken: 'b870d2fc440c4c5ba4e2f504fd96e6ce4e683f1500d24fb4a50035a2c4c3b47d',
         project: 'test-project',
         releaseId: '<%= buildId %>',
-        artifacts: [
+        files: [
           {
             file: 'test/artifacts/sample1.js',
             name: '~/js/sample1.js',
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
   // Actually load this plugin's task(s).
   grunt.loadTasks('tasks');
 
-  grunt.registerTask('test', ['sentry_release']);
+  grunt.registerTask('test', ['sentry_files']);
   grunt.registerTask('default', ['test']);
 
 };
