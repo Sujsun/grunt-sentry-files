@@ -41,6 +41,12 @@ grunt.initConfig({
           name: '<File Mapping Path>',
         },
       ],
+      // Optional parameters
+      refs: [{
+        repository: "my-repo",
+        commit: "2da95dfb052f477380608d59d32b4ab9"
+      }],
+      projects:["my-project","my-other-project"]
     },
   }
   
@@ -54,7 +60,10 @@ Find more information [here](https://docs.sentry.io/api/releases/post-release-fi
 **organisation** _[String]_ - Sentry Organisation Slug.  
 **authorisationToken** _[String]_ - Sentry Organisation Authorisation Token. (Go to https://sentry.io/api/ to create)  
 **project** _[String]_ – Sentry Project Slug.  
-**releaseId** _[String]_ – Release Identifier/Version.
+**releaseId** _[String]_ – Release Identifier/Version.  
+// Optional Parameters  
+**refs** _[Object[]]_ - Object with repository and commit information (https://blog.sentry.io/2017/05/01/release-commits.html).  
+**projects** _[String[]]_ - Name of projects in Sentry.
 
 ### Contributors
 [Sundarasan Natarajan](https://github.com/sundarasan)
