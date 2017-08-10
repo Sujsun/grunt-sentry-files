@@ -111,10 +111,10 @@ SentryUploader.prototype = {
     };
     // We check if we have any of the optional parameters
     if(this.refs) {
-      params['refs'] = params.refs;
+      params['refs'] = this.refs;
     }
     if(this.projects) {
-      params['projects'] = params.projects;
+      params['projects'] = this.projects;
     }
     return this.createRelease(params).then(function (releaseResponse) {
       self.releaseId = releaseResponse.version;
