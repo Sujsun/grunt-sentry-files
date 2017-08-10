@@ -107,7 +107,7 @@ SentryUploader.prototype = {
     var self = this;
     // Default body parameters
     var params = {
-      version: this.releaseId;
+      version: this.releaseId
     };
     // We check if we have any of the optional parameters
     if(this.refs) {
