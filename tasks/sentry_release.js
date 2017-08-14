@@ -90,6 +90,14 @@ function SentryUploader (params) {
   this.releaseId = params.releaseId;
   this.files = params.files || [];
   this.sentryUrl = new SentryUrl(params);
+  
+  // Optional parameters
+  if(params.refs) {
+    this.refs = params.refs;
+  }
+  if(params.projects) {
+    this.projects = params.projects
+  }
   return this;
 };
 
@@ -97,22 +105,33 @@ SentryUploader.prototype = {
 
   createReleaseAndUploadFiles: function () {
     var self = this;
-    return this.createRelease(this.releaseId).then(function (releaseResponse) {
+    // Default body parameters
+    var params = {
+      version: this.releaseId
+    };
+    // We check if we have any of the optional parameters
+    if(this.refs) {
+      params['refs'] = this.refs;
+    }
+    if(this.projects) {
+      params['projects'] = this.projects;
+    }
+    return this.createRelease(params).then(function (releaseResponse) {
       self.releaseId = releaseResponse.version;
       grunt.log.writeln('ReleaseID: '.bold + '"' + self.releaseId + '"');
       return self.uploadFiles();
     });
   },
 
-  createRelease: function (releaseId) {
+  createRelease: function (body) {
     var self = this,
       headers = this.sentryUrl.getAuthorisationHeaders();
     headers['Content-Type'] = 'application/json';
-
+    
     return request.post({
       uri: this.sentryUrl.getReleaseUrl(),
       headers: headers,
-      body: { version: releaseId, },
+      body: body,
       json: true,
     });
   },
@@ -192,7 +211,14 @@ module.exports = function(gruntArg) {
       releaseId: this.data.releaseId,
       files: this.data.files,
     };
-
+   
+    // Check for any of the optional parameters
+    if(this.data.refs) {
+      params['refs'] = this.data.refs;
+    }
+    if(this.data.projects) {
+      params['projects'] = this.data.projects; 
+    }
     sentryUploader = new SentryUploader(params);
 
     return sentryUploader.createReleaseAndUploadFiles().then(function () {
