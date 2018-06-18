@@ -1,3 +1,6 @@
+# About this fork
+This fork only introduces an additional parameter "domain" making the plugin usable for self-hosted sentry 
+
 # grunt-sentry-files [![Build Status](https://travis-ci.org/Sujsun/grunt-sentry-files.svg?branch=master)](https://travis-ci.org/Sujsun/grunt-sentry-files)
 
 > Creates release and uploads artifacts to Sentry

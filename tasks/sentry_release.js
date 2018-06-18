@@ -22,6 +22,7 @@ function SentryUrl (params) {
   params.organisation && this.setOrganisationName(params.organisation);
   params.project && this.setProjectName(params.project);
   params.authorisationToken && this.setAuthorisationToken(params.authorisationToken);
+  params.domain && this.setDomain(params.domain);
   return this;
 }
 
@@ -46,6 +47,14 @@ SentryUrl.prototype = {
   getProjectName: function () {
     return this._projectName;
   },
+  
+  setDomain: function (domain) {
+    return (this._domain = domain);
+  },
+
+  getDomain: function () {
+    return this._domain;
+  },
 
   setAuthorisationToken: function (authorisationToken) {
     return (this._authorisationToken = authorisationToken);
@@ -56,7 +65,7 @@ SentryUrl.prototype = {
   },
 
   getAPIBaseUrl: function () {
-    return 'https://' + this.DOMAIN + '/api/' + this.API_VERSION;
+    return 'https://' + (this._domain || this.DOMAIN) + '/api/' + this.API_VERSION;
   },
 
   getProjectUrl: function () {
@@ -218,6 +227,9 @@ module.exports = function(gruntArg) {
     }
     if(this.data.projects) {
       params['projects'] = this.data.projects; 
+    }
+    if(this.data.domain) {
+      params['domain'] = this.data.domain;
     }
     sentryUploader = new SentryUploader(params);
 
