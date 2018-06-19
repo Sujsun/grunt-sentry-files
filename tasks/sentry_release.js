@@ -72,8 +72,8 @@ SentryUrl.prototype = {
     return this.getAPIBaseUrl() + '/projects';
   },
 
-  getReleaseUrl: function () {
-    return this.getProjectUrl() + '/' + this.getOrganisationName() + '/' + this.getProjectName() + '/releases/';
+  getReleaseUrl: function (releaseId) {
+    return this.getProjectUrl() + '/' + this.getOrganisationName() + '/' + this.getProjectName() + '/releases/' + (releaseId ? releaseId + '/' : '');
   },
 
   getReleaseFilesUrl: function (releaseId) {
@@ -107,6 +107,9 @@ function SentryUploader (params) {
   if(params.projects) {
     this.projects = params.projects
   }
+  if(params.tryToDeleteReleaseFirst) {
+    this.tryToDeleteReleaseFirst = params.tryToDeleteReleaseFirst;
+  }
   return this;
 };
 
@@ -125,11 +128,31 @@ SentryUploader.prototype = {
     if(this.projects) {
       params['projects'] = this.projects;
     }
-    return this.createRelease(params).then(function (releaseResponse) {
+    
+    var afterReleaseCreate = function (releaseResponse) {
       self.releaseId = releaseResponse.version;
       grunt.log.writeln('ReleaseID: '.bold + '"' + self.releaseId + '"');
       return self.uploadFiles();
-    });
+    };
+    
+    if (this.tryToDeleteReleaseFirst) {
+        return this.deleteRelease()
+          .then(function() {
+            grunt.log.writeln('Release deleted.');
+            return self.createRelease(params).then(afterReleaseCreate);
+          })
+          .catch(function(err) {
+            if (err.statusCode === 404) {
+                // we are just trying to delete first, if it is not there that is fine
+                grunt.log.writeln('Release already deleted, continueing... ');
+                return self.createRelease(params).then(afterReleaseCreate);
+            } else {
+                throw err;
+            }
+          });
+    }
+    
+    return this.createRelease(params).then(afterReleaseCreate);
   },
 
   createRelease: function (body) {
@@ -162,6 +185,17 @@ SentryUploader.prototype = {
       json: true,
     });
   },
+  
+  deleteRelease: function() {
+      var self = this;
+      grunt.log.writeln('Deleting Release: ' + this.releaseId);
+      return request({
+        method: 'DELETE',
+        url: this.sentryUrl.getReleaseUrl(this.releaseId),
+        headers: this.sentryUrl.getAuthorisationHeaders(),
+        json: true,
+      });
+  }
 
 };
 
@@ -230,6 +264,9 @@ module.exports = function(gruntArg) {
     }
     if(this.data.domain) {
       params['domain'] = this.data.domain;
+    }
+    if(this.data.tryToDeleteReleaseFirst) {
+      params['tryToDeleteReleaseFirst'] = this.data.tryToDeleteReleaseFirst;
     }
     sentryUploader = new SentryUploader(params);
 
