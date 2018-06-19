@@ -1,3 +1,7 @@
+# About this fork
+This fork only introduces an additional parameter "domain" making the plugin usable for self-hosted sentry.
+Also a new parameter "tryToDeleteReleaseFirst" is introduced, tryiing to delete existing release first before creating new one (when your release id is not unique by build)
+
 # grunt-sentry-files [![Build Status](https://travis-ci.org/Sujsun/grunt-sentry-files.svg?branch=master)](https://travis-ci.org/Sujsun/grunt-sentry-files)
 
 > Creates release and uploads artifacts to Sentry
@@ -69,7 +73,10 @@ Find more information [here](https://docs.sentry.io/api/releases/post-release-fi
 #### Optional Parameters:
 **refs** _[Object[]]_ - Object with repository and commit information (https://blog.sentry.io/2017/05/01/release-commits.html).  
 **projects** _[String[]]_ - Name of projects in Sentry.
+**domain** _[String]_ - Custom domain for selfhosted Sentry instance (sentry.io is used by default)
+**tryToDeleteReleaseFirst** _[Boolean] - When set to true, tries do delete the release with releaseId first, so you can update one release if your release id is not unique by build
 
 ### Contributors
 - [Sundarasan Natarajan](https://github.com/sundarasan)
 - [Moisesrodriguez](https://github.com/moisesrodriguez)
+- [JanST123](https://github.com/JanST123)
